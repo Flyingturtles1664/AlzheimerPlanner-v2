@@ -1,0 +1,3631 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Harbor Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+:root {
+  --ink: #1e1b16;
+  --muted: #4a453f;
+  --paper: #f7f2ea;
+  --accent: #d77a61;
+  --accent-2: #4c7a72;
+  --card: #fffaf2;
+  --line: #e3d9cb;
+  --focus: #2e7069;
+  --danger: #9b3f37;
+  --danger-bg: #fbe7e4;
+  --shadow: 0 20px 45px rgba(24, 18, 12, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at top, #fff4e1 0%, #f4e7d8 40%, #eadccd 100%);
+  min-height: 100vh;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+body.large-text {
+  font-size: 112%;
+}
+
+h1,
+h2,
+.eyebrow {
+  font-family: "Fraunces", "Georgia", serif;
+}
+
+.ambient {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(130deg, rgba(215, 122, 97, 0.14), rgba(76, 122, 114, 0.18));
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+header.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: 2.5rem;
+  padding: 3rem 6vw 2rem;
+}
+
+.hero-text h1 {
+  font-size: clamp(2.4rem, 3.2vw, 3.4rem);
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  color: var(--accent-2);
+}
+
+.subhead {
+  color: var(--muted);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: var(--shadow);
+  animation: floatIn 1s ease;
+}
+
+main {
+  padding: 0 6vw 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.panel {
+  background: var(--card);
+  border-radius: 1.5rem;
+  padding: 1.8rem 2rem;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.view-switcher {
+  background: linear-gradient(140deg, #fff3e6, #f4e7d8);
+}
+
+.panel-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.toggle {
+  display: inline-flex;
+  padding: 0.3rem;
+  border-radius: 999px;
+  background: #f1e4d4;
+  gap: 0.2rem;
+}
+
+.toggle-btn {
+  border: none;
+  background: transparent;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.toggle-btn.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tab {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab.active {
+  background: var(--accent-2);
+  color: #fff;
+  border-color: transparent;
+}
+
+.planner-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+label {
+  display: grid;
+  gap: 0.4rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+input,
+select,
+textarea {
+  border-radius: 0.9rem;
+  border: 1px solid var(--line);
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+  font-family: "IBM Plex Sans", sans-serif;
+  background: #fff;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  border: none;
+  font-size: 1rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.list {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.list-item {
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  padding: 0.9rem 1rem;
+  background: #fff;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.list-item.is-done {
+  opacity: 0.55;
+}
+
+.list-item small {
+  color: var(--muted);
+}
+
+.list-item .meta {
+  display: grid;
+  grid-template-columns: minmax(84px, auto) 1fr auto;
+  align-items: start;
+  gap: 0.8rem;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.list-item button {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  background: #f3e6d7;
+  color: var(--muted);
+}
+
+.item-time {
+  font-weight: 700;
+  color: var(--accent-2);
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+
+.item-main {
+  display: grid;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.item-main strong {
+  font-size: 1.03rem;
+}
+
+.item-day {
+  color: var(--muted);
+}
+
+.list-item .remove-btn {
+  background: var(--danger-bg);
+  border: 1px solid #efcbc7;
+  color: var(--danger);
+  font-weight: 700;
+  padding: 0.3rem 0.6rem;
+  border-radius: 999px;
+}
+
+.list-item .remove-btn:hover {
+  background: #f6d7d2;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.status {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.summary {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+}
+
+.mode-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  background: linear-gradient(120deg, #fff8ef, #f3e8d9);
+}
+
+.mode-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+}
+
+.mode-chip {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid transparent;
+}
+
+.mode-chip.caregiver {
+  background: #f9e2dc;
+  color: #833222;
+  border-color: #edbeb2;
+}
+
+.mode-chip.simple {
+  background: #e2f2ef;
+  color: #1f6459;
+  border-color: #b8dfd8;
+}
+
+.mode-detail {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.timeline-strip {
+  background: linear-gradient(130deg, #fff8f0, #f4ebdd);
+}
+
+.timeline-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.timeline-card {
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  padding: 0.95rem;
+  background: #fff;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.timeline-card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.timeline-item {
+  margin: 0;
+  font-weight: 600;
+}
+
+.timeline-meta {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.safety {
+  background: linear-gradient(130deg, #fff7ee, #f2e7da);
+}
+
+.safety-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  margin-top: 1rem;
+}
+
+.week-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.week-day {
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  padding: 1rem;
+  background: #fff;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.week-day h3 {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.week-day ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.density-toggle {
+  display: inline-flex;
+  background: #f2e5d6;
+  border-radius: 999px;
+  padding: 0.2rem;
+  gap: 0.2rem;
+}
+
+.density-btn {
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.density-btn.active {
+  background: var(--accent-2);
+  color: #fff;
+}
+
+.week-grid.compact {
+  gap: 0.6rem;
+}
+
+.week-grid.compact .week-day {
+  padding: 0.7rem;
+}
+
+.week-grid.compact .week-day ul {
+  gap: 0.25rem;
+  font-size: 0.88rem;
+}
+
+.routine-grid {
+  display: grid;
+  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.routine-card {
+  border-radius: 1.2rem;
+  border: 1px solid var(--line);
+  padding: 1.2rem;
+  background: #fff;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.routine-card h3 {
+  margin: 0;
+}
+
+.routine-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+footer {
+  padding: 2rem 6vw 3rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.simple-mode .planner-form:not(.access-form),
+.simple-mode .panel-actions,
+.simple-mode textarea,
+.simple-mode .safety {
+  display: none;
+}
+
+.simple-mode .view[data-view="week"],
+.simple-mode .view[data-view="routines"],
+.simple-mode .view[data-view="meds"],
+.simple-mode .view[data-view="handoff"],
+.simple-mode .view[data-view="incidents"],
+.simple-mode .view[data-view="trends"],
+.simple-mode .view[data-view="team"],
+.simple-mode .view[data-view="settings"],
+.simple-mode .view[data-view="audit"] {
+  display: none;
+}
+
+.simple-mode .list-item button {
+  display: none;
+}
+
+.view-hidden {
+  display: none;
+}
+
+.access-form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.access-form button {
+  align-self: flex-start;
+}
+
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgba(18, 14, 10, 0.5);
+  padding: 1rem;
+}
+
+.gate-hidden {
+  display: none;
+}
+
+.gate-card {
+  width: min(560px, 100%);
+  background: #fff9f1;
+  border: 1px solid var(--line);
+  border-radius: 1.2rem;
+  box-shadow: var(--shadow);
+  padding: 1.3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.gate-section {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.9rem;
+  background: #fff;
+  display: grid;
+  gap: 0.8rem;
+}
+
+.gate-step {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.gate-primary {
+  padding: 0.9rem 1.2rem;
+  font-size: 1.05rem;
+}
+
+.gate-head h2 {
+  margin: 0;
+}
+
+.gate-head p {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+}
+
+.gate-actions {
+  display: flex;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.divider {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+.toast-stack {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  display: grid;
+  gap: 0.6rem;
+  max-width: 340px;
+}
+
+.toast {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--accent-2);
+  border-radius: 0.8rem;
+  box-shadow: var(--shadow);
+  padding: 0.65rem 0.75rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.toast.warn {
+  border-left-color: var(--danger);
+}
+
+.toast.success {
+  border-left-color: var(--accent-2);
+}
+
+.toast.info {
+  border-left-color: #7f7770;
+}
+
+.toast-message {
+  font-size: 0.92rem;
+}
+
+.toast-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.toast-btn {
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+  padding: 0.25rem 0.6rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.mobile-actions {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 45;
+  display: none;
+  gap: 0.6rem;
+  padding: 0.7rem;
+  background: rgba(255, 248, 240, 0.98);
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(8px);
+}
+
+.mobile-actions button {
+  flex: 1;
+  padding: 0.65rem 0.7rem;
+  font-size: 0.88rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted);
+}
+
+.pill.owner {
+  background: #fce9e3;
+  color: #8d3a2b;
+  border-color: #f2c0b3;
+}
+
+.pill.caregiver {
+  background: #e8f4f1;
+  color: #24655a;
+  border-color: #c7e7e0;
+}
+
+.pill.viewer {
+  background: #efece8;
+  color: #5a5550;
+  border-color: #ddd3c6;
+}
+
+.panel-subgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.metric-card {
+  background: #fff;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.3rem;
+}
+
+.metric-card strong {
+  font-size: 1.3rem;
+}
+
+.bar-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.bar-row {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.bar-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #efe4d6;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: var(--accent-2);
+}
+
+.team-list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.team-item {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  padding: 0.8rem 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.team-item .identity {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.audit-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.audit-entry {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  padding: 0.7rem 0.85rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.incident-card {
+  border: 1px solid var(--line);
+  border-radius: 0.9rem;
+  background: #fff;
+  padding: 0.7rem 0.85rem;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.integration-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.emergency-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: #fff7ee;
+  overflow: auto;
+  padding: 1.1rem;
+}
+
+.emergency-hidden {
+  display: none;
+}
+
+.emergency-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.emergency-title {
+  margin: 0;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+}
+
+.emergency-grid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  margin-top: 1rem;
+}
+
+.emergency-block {
+  border-radius: 1rem;
+  border: 1px solid #e6d4c1;
+  background: #fff;
+  padding: 0.85rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+@keyframes floatIn {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 960px) {
+  header.hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  header.hero,
+  main {
+    padding: 2rem 1.4rem;
+  }
+
+  body {
+    padding-bottom: 4.4rem;
+  }
+
+  .mobile-actions {
+    display: flex;
+  }
+
+  .list-item .meta {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+}
+
+@media print {
+  .hero-actions,
+  .toggle,
+  button,
+  .ambient,
+  .gate,
+  .toast-stack,
+  .mobile-actions {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="ambient"></div>
+    <header class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">Harbor Plan</p>
+        <h1>Calm, clear routines for meals and movement.</h1>
+        <p class="subhead">
+          Plan a day that supports memory, energy, and dignity. Designed for caregivers and
+          people living with Alzheimer’s.
+        </p>
+        <div class="hero-actions">
+          <button id="printPlan" class="primary">Print or save today</button>
+          <button id="resetPlan" class="ghost">Start a new day</button>
+          <button id="openEmergency" class="ghost" type="button">Emergency mode</button>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Today at a glance</h2>
+        <div class="summary" id="summary"></div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel mode-bar">
+        <div>
+          <div class="mode-badge">
+            <span>Current mode:</span>
+            <span id="modeChip" class="mode-chip simple">Simple View</span>
+          </div>
+          <p id="modeDetail" class="mode-detail">Quick, low-clutter view for calm routines.</p>
+        </div>
+        <button id="toggleLargeText" class="ghost" type="button">Large text: Off</button>
+      </section>
+
+      <section class="panel view-switcher">
+        <div class="panel-head">
+          <h2>Views</h2>
+          <p>Jump between today, week, routines, medication, and handoff.</p>
+        </div>
+        <div class="tabs" id="viewTabs">
+          <button class="tab active" data-view="today">Today</button>
+          <button class="tab" data-view="week">Week</button>
+          <button class="tab" data-view="routines">Routines</button>
+          <button class="tab" data-view="meds">Medication</button>
+          <button class="tab" data-view="handoff">Handoff</button>
+          <button class="tab" data-view="incidents">Incidents</button>
+          <button class="tab" data-view="trends">Trends</button>
+          <button class="tab" data-view="team">Team</button>
+          <button class="tab" data-view="settings">Settings</button>
+          <button class="tab" data-view="audit">Audit</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Who is this plan for?</h2>
+          <p>Switch between caregiver detail view and a simplified view.</p>
+        </div>
+        <div class="toggle">
+          <button class="toggle-btn" data-mode="caregiver">Caregiver view</button>
+          <button class="toggle-btn active" data-mode="patient">Simple view</button>
+        </div>
+      </section>
+
+      <section class="panel timeline-strip view" data-view="today">
+        <div class="panel-head">
+          <h2>Now, next, later</h2>
+          <p>See priorities at a glance.</p>
+        </div>
+        <div class="timeline-grid">
+          <article class="timeline-card">
+            <h3>Now</h3>
+            <p id="timelineNow" class="timeline-item">No immediate items.</p>
+            <p id="timelineNowMeta" class="timeline-meta"></p>
+          </article>
+          <article class="timeline-card">
+            <h3>Next</h3>
+            <p id="timelineNext" class="timeline-item">No upcoming items.</p>
+            <p id="timelineNextMeta" class="timeline-meta"></p>
+          </article>
+          <article class="timeline-card">
+            <h3>Later</h3>
+            <p id="timelineLater" class="timeline-item">No later items.</p>
+            <p id="timelineLaterMeta" class="timeline-meta"></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="grid view" data-view="today">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Meals</h2>
+            <p>Small, regular meals with hydration cues.</p>
+          </div>
+          <form id="mealForm" class="planner-form">
+            <label>
+              Meal name
+              <input type="text" name="title" placeholder="Breakfast: oatmeal & berries" required />
+            </label>
+            <label>
+              Time
+              <input type="time" name="time" required />
+            </label>
+            <label>
+              Day
+              <select name="day" class="day-select" required>
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+            </label>
+            <label>
+              Repeat
+              <select name="repeat">
+                <option value="once">Once</option>
+                <option value="daily">Daily</option>
+                <option value="weekdays">Weekdays</option>
+              </select>
+            </label>
+            <label>
+              Support note
+              <input type="text" name="notes" placeholder="Warm tea, cut fruit, gentle prompt" />
+            </label>
+            <button type="submit" class="primary">Add meal</button>
+          </form>
+          <div id="mealList" class="list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Movement</h2>
+            <p>Light activity that feels safe and familiar.</p>
+          </div>
+          <form id="exerciseForm" class="planner-form">
+            <label>
+              Activity
+              <input type="text" name="title" placeholder="10 min walk in the garden" required />
+            </label>
+            <label>
+              Time
+              <input type="time" name="time" required />
+            </label>
+            <label>
+              Day
+              <select name="day" class="day-select" required>
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+            </label>
+            <label>
+              Repeat
+              <select name="repeat">
+                <option value="once">Once</option>
+                <option value="daily">Daily</option>
+                <option value="weekdays">Weekdays</option>
+              </select>
+            </label>
+            <label>
+              Support note
+              <input type="text" name="notes" placeholder="Bring water, walk together" />
+            </label>
+            <button type="submit" class="primary">Add activity</button>
+          </form>
+          <div id="exerciseList" class="list"></div>
+        </div>
+      </section>
+
+      <section class="grid view" data-view="today">
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Gentle reminders</h2>
+            <p>Simple prompts to keep the day anchored.</p>
+          </div>
+          <form id="reminderForm" class="planner-form">
+            <label>
+              Reminder
+              <input type="text" name="title" placeholder="Hydration check" required />
+            </label>
+            <label>
+              Time
+              <input type="time" name="time" required />
+            </label>
+            <label>
+              Day
+              <select name="day" class="day-select" required>
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+            </label>
+            <label>
+              Repeat
+              <select name="repeat">
+                <option value="once">Once</option>
+                <option value="daily">Daily</option>
+                <option value="weekdays">Weekdays</option>
+              </select>
+            </label>
+            <label>
+              Tone
+              <select name="tone">
+                <option value="gentle">Gentle</option>
+                <option value="encouraging">Encouraging</option>
+                <option value="firm">Firm</option>
+              </select>
+            </label>
+            <button type="submit" class="primary">Add reminder</button>
+          </form>
+          <div id="reminderList" class="list"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Caregiver notes</h2>
+            <p>Capture cues, stressors, and wins.</p>
+          </div>
+          <textarea id="careNotes" rows="10" placeholder="Example: Best energy after breakfast. Prefers music during walk."></textarea>
+          <div class="panel-actions">
+            <button id="saveNotes" class="primary">Save notes</button>
+            <span id="saveStatus" class="status">Not saved</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel safety view" data-view="today">
+        <div>
+          <h2>Safety quick check</h2>
+          <p>Keep these visible for anyone stepping in to help.</p>
+        </div>
+        <div class="safety-grid">
+          <label>
+            Preferred foods
+            <input type="text" id="prefFoods" placeholder="Soft foods, warm meals" />
+          </label>
+          <label>
+            Foods to avoid
+            <input type="text" id="avoidFoods" placeholder="Sticky textures" />
+          </label>
+          <label>
+            Mobility notes
+            <input type="text" id="mobilityNotes" placeholder="Use walker, steady pace" />
+          </label>
+          <label>
+            Emergency contact
+            <input type="text" id="emergencyContact" placeholder="Name + phone" />
+          </label>
+          <label>
+            Diagnosis notes
+            <input type="text" id="diagnosisNotes" placeholder="Diagnosis, stage, key notes" />
+          </label>
+          <label>
+            Allergy notes
+            <input type="text" id="allergyNotes" placeholder="Medication, food, environmental allergies" />
+          </label>
+          <label>
+            Clinician contact
+            <input type="text" id="clinicianContact" placeholder="Clinician name + phone" />
+          </label>
+          <label>
+            Home address
+            <input type="text" id="homeAddress" placeholder="Address for emergency responders" />
+          </label>
+        </div>
+      </section>
+
+      <section class="panel view" data-view="week">
+        <div class="panel-head">
+          <h2>Week overview</h2>
+          <p>Scan the full week by day and by type.</p>
+          <div class="density-toggle" id="densityToggle">
+            <button type="button" class="density-btn active" data-density="comfort">Comfort</button>
+            <button type="button" class="density-btn" data-density="compact">Compact</button>
+          </div>
+        </div>
+        <div id="weekView" class="week-grid"></div>
+      </section>
+
+      <section class="panel view" data-view="routines">
+        <div class="panel-head">
+          <h2>Routine library</h2>
+          <p>Drop in gentle, familiar sequences with one click.</p>
+        </div>
+        <div class="routine-grid" id="routineGrid">
+          <article class="routine-card" data-routine="gentle-morning">
+            <h3>Gentle morning</h3>
+            <p>Breakfast, hydration, and a light stretch.</p>
+            <div class="routine-actions">
+              <select class="routine-day">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+              <button class="ghost routine-add" type="button">Add to day</button>
+            </div>
+          </article>
+          <article class="routine-card" data-routine="midday-move">
+            <h3>Midday movement</h3>
+            <p>Walk, balance check, and a snack.</p>
+            <div class="routine-actions">
+              <select class="routine-day">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+              <button class="ghost routine-add" type="button">Add to day</button>
+            </div>
+          </article>
+          <article class="routine-card" data-routine="evening-winddown">
+            <h3>Evening wind-down</h3>
+            <p>Soft dinner, calm reminder, and soothing music.</p>
+            <div class="routine-actions">
+              <select class="routine-day">
+                <option value="0">Sunday</option>
+                <option value="1">Monday</option>
+                <option value="2">Tuesday</option>
+                <option value="3">Wednesday</option>
+                <option value="4">Thursday</option>
+                <option value="5">Friday</option>
+                <option value="6">Saturday</option>
+              </select>
+              <button class="ghost routine-add" type="button">Add to day</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="panel view" data-view="meds">
+        <div class="panel-head">
+          <h2>Medication schedule</h2>
+          <p>Track meds alongside meals to reduce missed doses.</p>
+        </div>
+        <form id="medForm" class="planner-form">
+          <label>
+            Medication
+            <input type="text" name="title" placeholder="Donepezil" required />
+          </label>
+          <label>
+            Time
+            <input type="time" name="time" required />
+          </label>
+          <label>
+            Dosage
+            <input type="text" name="dosage" placeholder="5 mg" />
+          </label>
+          <label>
+            Day
+            <select name="day" class="day-select" required>
+              <option value="0">Sunday</option>
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+            </select>
+          </label>
+          <label>
+            Repeat
+            <select name="repeat">
+              <option value="once">Once</option>
+              <option value="daily">Daily</option>
+              <option value="weekdays">Weekdays</option>
+            </select>
+          </label>
+          <label>
+            Critical dose
+            <select name="critical">
+              <option value="no">No</option>
+              <option value="yes">Yes</option>
+            </select>
+          </label>
+          <label>
+            Instructions
+            <input type="text" name="notes" placeholder="With food, full glass of water" />
+          </label>
+          <button type="submit" class="primary">Add medication</button>
+        </form>
+        <div id="medList" class="list"></div>
+        <div class="panel-actions">
+          <button id="enableAlerts" class="ghost" type="button">Enable alerts</button>
+          <span id="alertStatus" class="status">Alerts off</span>
+        </div>
+        <p class="status">Alerts work while this page stays open.</p>
+      </section>
+
+      <section class="panel view" data-view="handoff">
+        <div class="panel-head">
+          <h2>Caregiver handoff</h2>
+          <p>Share a clear summary for the next shift.</p>
+        </div>
+        <textarea id="handoffText" rows="12" readonly></textarea>
+        <div class="panel-actions">
+          <button id="copyHandoff" class="primary" type="button">Copy summary</button>
+          <button id="printHandoff" class="ghost" type="button">Print summary</button>
+        </div>
+      </section>
+
+      <section class="panel view" data-view="incidents">
+        <div class="panel-head">
+          <h2>Incident tracker</h2>
+          <p>Log critical events and behavior changes.</p>
+        </div>
+        <form id="incidentForm" class="planner-form">
+          <label>
+            Incident type
+            <select name="type" required>
+              <option value="confusion">Confusion episode</option>
+              <option value="fall">Fall / near-fall</option>
+              <option value="sleep">Sleep disruption</option>
+              <option value="appetite">Appetite change</option>
+              <option value="medication">Medication issue</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label>
+            Severity
+            <select name="severity">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </label>
+          <label>
+            Time
+            <input type="time" name="time" required />
+          </label>
+          <label>
+            Day
+            <select name="day" class="day-select" required>
+              <option value="0">Sunday</option>
+              <option value="1">Monday</option>
+              <option value="2">Tuesday</option>
+              <option value="3">Wednesday</option>
+              <option value="4">Thursday</option>
+              <option value="5">Friday</option>
+              <option value="6">Saturday</option>
+            </select>
+          </label>
+          <label>
+            Notes
+            <input type="text" name="notes" placeholder="Observed trigger, context, follow-up" />
+          </label>
+          <button type="submit" class="primary">Log incident</button>
+        </form>
+        <div id="incidentList" class="list"></div>
+      </section>
+
+      <section class="panel view" data-view="trends">
+        <div class="panel-head">
+          <h2>Trend dashboard</h2>
+          <p>Completion and risk patterns across the week.</p>
+        </div>
+        <div id="trendMetrics" class="panel-subgrid"></div>
+        <div class="panel-subgrid">
+          <div class="metric-card">
+            <h3>Daily completion</h3>
+            <div id="completionBars" class="bar-list"></div>
+          </div>
+          <div class="metric-card">
+            <h3>Incident counts</h3>
+            <div id="incidentBars" class="bar-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel view" data-view="team">
+        <div class="panel-head">
+          <h2>Team and access</h2>
+          <p>Manage user roles and active session.</p>
+        </div>
+        <div class="panel-subgrid">
+          <div class="metric-card">
+            <h3>Current user</h3>
+            <p id="activeUserSummary">Not signed in.</p>
+            <form id="switchUserForm" class="planner-form">
+              <label>
+                User
+                <select id="switchUserSelect" name="userId"></select>
+              </label>
+              <label>
+                PIN
+                <input type="password" name="pin" autocomplete="current-password" />
+              </label>
+              <button type="submit" class="ghost">Switch user</button>
+            </form>
+          </div>
+          <div class="metric-card">
+            <h3>Add team member</h3>
+            <form id="createUserForm" class="planner-form">
+              <label>
+                Name
+                <input type="text" name="name" placeholder="Alex Caregiver" required />
+              </label>
+              <label>
+                Role
+                <select name="role">
+                  <option value="caregiver">Caregiver</option>
+                  <option value="viewer">Viewer</option>
+                  <option value="owner">Owner</option>
+                </select>
+              </label>
+              <label>
+                PIN
+                <input type="password" name="pin" autocomplete="new-password" required />
+              </label>
+              <button type="submit" class="primary">Add member</button>
+            </form>
+          </div>
+        </div>
+        <div id="teamList" class="team-list"></div>
+      </section>
+
+      <section class="panel view" data-view="settings">
+        <div class="panel-head">
+          <h2>Settings and integrations</h2>
+          <p>Escalation rules, backup/restore, calendar export, and sharing.</p>
+        </div>
+        <div class="panel-subgrid">
+          <div class="metric-card">
+            <h3>Escalation thresholds (minutes overdue)</h3>
+            <form id="escalationForm" class="planner-form">
+              <label>
+                Stage 1
+                <input type="number" id="escOne" min="1" step="1" />
+              </label>
+              <label>
+                Stage 2
+                <input type="number" id="escTwo" min="1" step="1" />
+              </label>
+              <label>
+                Stage 3
+                <input type="number" id="escThree" min="1" step="1" />
+              </label>
+              <button type="submit" class="ghost">Save escalation</button>
+            </form>
+          </div>
+          <div class="metric-card">
+            <h3>Calendar + sharing</h3>
+            <div class="integration-actions">
+              <button id="exportCalendar" class="ghost" type="button">Export .ics</button>
+              <button id="shareSms" class="ghost" type="button">Share by SMS</button>
+              <button id="shareEmail" class="ghost" type="button">Share by Email</button>
+              <button id="syncNow" class="ghost" type="button">Sync now</button>
+            </div>
+            <p id="syncStatus" class="status">Sync idle.</p>
+          </div>
+          <div class="metric-card">
+            <h3>Encrypted backup</h3>
+            <form id="backupExportForm" class="planner-form">
+              <label>
+                Backup passphrase
+                <input type="password" id="backupPassphrase" autocomplete="new-password" required />
+              </label>
+              <button type="submit" class="primary">Download encrypted backup</button>
+            </form>
+          </div>
+          <div class="metric-card">
+            <h3>Restore backup</h3>
+            <form id="backupImportForm" class="planner-form">
+              <label>
+                Backup file
+                <input type="file" id="backupFile" accept=".json,application/json" required />
+              </label>
+              <label>
+                Backup passphrase
+                <input type="password" id="restorePassphrase" autocomplete="current-password" required />
+              </label>
+              <button type="submit" class="ghost">Restore encrypted backup</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel view" data-view="audit">
+        <div class="panel-head">
+          <h2>Audit log</h2>
+          <p>Timestamped actions and accountability trail.</p>
+        </div>
+        <div id="auditList" class="audit-list"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        Harbor Plan is a planning helper and does not replace medical advice. For safety concerns,
+        check with a clinician.
+      </p>
+    </footer>
+
+    <div id="caregiverGate" class="gate gate-hidden" aria-hidden="true">
+      <div class="gate-card" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+        <div class="gate-head">
+          <h2 id="gateTitle">Caregiver password</h2>
+          <p>Enter password to open caregiver view, or return to the main menu.</p>
+        </div>
+        <div class="gate-section">
+          <p class="gate-step">Step 1: Unlock</p>
+          <form id="unlockForm" class="planner-form access-form">
+            <label>
+              Password
+              <input
+                type="password"
+                id="unlockPassword"
+                name="password"
+                autocomplete="current-password"
+              />
+            </label>
+            <div class="gate-actions">
+              <button type="submit" class="primary gate-primary">Enter caregiver view</button>
+              <button type="button" id="gateExit" class="ghost">Back to main menu</button>
+            </div>
+            <p id="unlockStatus" class="status"></p>
+          </form>
+        </div>
+        <hr class="divider" />
+        <div class="gate-section">
+          <p class="gate-step">Step 2: Manage password</p>
+          <form id="passwordForm" class="planner-form access-form">
+            <label>
+              Current password
+              <input
+                type="password"
+                id="currentPassword"
+                name="current"
+                autocomplete="current-password"
+              />
+            </label>
+            <label>
+              New password
+              <input
+                type="password"
+                id="newPassword"
+                name="next"
+                autocomplete="new-password"
+                required
+              />
+            </label>
+            <label>
+              Confirm new password
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirm"
+                autocomplete="new-password"
+                required
+              />
+            </label>
+            <button type="submit" class="ghost">Set or change password</button>
+            <p id="passwordStatus" class="status"></p>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastStack" class="toast-stack" aria-live="polite"></div>
+
+    <div class="mobile-actions">
+      <button id="quickAddAction" class="primary" type="button">Quick Add</button>
+      <button id="quickSaveAction" class="ghost" type="button">Save Notes</button>
+      <button id="quickHandoffAction" class="ghost" type="button">Handoff</button>
+    </div>
+
+    <section id="emergencyScreen" class="emergency-screen emergency-hidden" aria-hidden="true">
+      <div class="emergency-header">
+        <h2 class="emergency-title">Emergency Profile</h2>
+        <button id="closeEmergency" class="ghost" type="button">Close</button>
+      </div>
+      <p class="status">For urgent handoff to responders and on-call caregivers.</p>
+      <div class="emergency-grid">
+        <article class="emergency-block">
+          <h3>Primary Contact</h3>
+          <p id="emergencyContactView"></p>
+        </article>
+        <article class="emergency-block">
+          <h3>Diagnosis</h3>
+          <p id="diagnosisView"></p>
+        </article>
+        <article class="emergency-block">
+          <h3>Allergies</h3>
+          <p id="allergyView"></p>
+        </article>
+        <article class="emergency-block">
+          <h3>Clinician</h3>
+          <p id="clinicianView"></p>
+        </article>
+        <article class="emergency-block">
+          <h3>Address</h3>
+          <p id="addressView"></p>
+        </article>
+        <article class="emergency-block">
+          <h3>Today medications</h3>
+          <div id="emergencyMedsView"></div>
+        </article>
+      </div>
+    </section>
+
+    <script>
+const STORAGE_KEY = "harbor-plan-data";
+const CAREGIVER_PASS_KEY = "harbor-plan-caregiver-pass";
+const NOTES_SAVE_DELAY_MS = 700;
+const DELETE_UNDO_MS = 5200;
+const ESCALATION_CHECK_MS = 60000;
+const AUDIT_MAX = 400;
+const DAYS = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+function getTodayIndex() {
+  return new Date().getDay();
+}
+
+function createDefaultData() {
+  const today = getTodayIndex();
+  const ownerId = crypto.randomUUID();
+  return {
+    meals: [
+      {
+        id: crypto.randomUUID(),
+        title: "Breakfast: oatmeal & berries",
+        time: "08:00",
+        notes: "Warm tea, gentle prompt",
+        day: today,
+        done: false,
+        repeat: "once",
+      },
+    ],
+    exercises: [
+      {
+        id: crypto.randomUUID(),
+        title: "10 min walk in the garden",
+        time: "10:30",
+        notes: "Bring water, walk together",
+        day: today,
+        done: false,
+        repeat: "once",
+      },
+    ],
+    reminders: [
+      {
+        id: crypto.randomUUID(),
+        title: "Hydration check",
+        time: "09:30",
+        tone: "gentle",
+        day: today,
+        done: false,
+        repeat: "once",
+      },
+    ],
+    meds: [],
+    incidents: [],
+    auditLog: [],
+    notes: "",
+    safety: {
+      prefFoods: "",
+      avoidFoods: "",
+      mobilityNotes: "",
+      emergencyContact: "",
+      diagnosisNotes: "",
+      allergyNotes: "",
+      clinicianContact: "",
+      homeAddress: "",
+    },
+    accounts: [
+      {
+        id: ownerId,
+        name: "Primary Owner",
+        role: "owner",
+        pin: "",
+      },
+    ],
+    activeUserId: ownerId,
+    mode: "patient",
+    view: "today",
+    weekDensity: "comfort",
+    largeText: false,
+    escalationMinutes: {
+      one: 15,
+      two: 30,
+      three: 60,
+    },
+    escalationHistory: {},
+    lastSyncedAt: "",
+    alertsEnabled: false,
+  };
+}
+
+const routines = {
+  "gentle-morning": {
+    meals: [
+      {
+        title: "Breakfast: warm cereal",
+        time: "08:00",
+        notes: "Serve warm, offer tea",
+      },
+    ],
+    reminders: [
+      {
+        title: "Hydration reminder",
+        time: "08:45",
+        tone: "gentle",
+      },
+    ],
+    exercises: [
+      {
+        title: "5 min stretch together",
+        time: "09:15",
+        notes: "Slow pace, chair nearby",
+      },
+    ],
+  },
+  "midday-move": {
+    meals: [
+      {
+        title: "Midday snack",
+        time: "12:00",
+        notes: "Soft fruit or yogurt",
+      },
+    ],
+    exercises: [
+      {
+        title: "15 min walk",
+        time: "11:15",
+        notes: "Bring water, shade if needed",
+      },
+    ],
+    reminders: [
+      {
+        title: "Rest and breathe",
+        time: "12:30",
+        tone: "encouraging",
+      },
+    ],
+  },
+  "evening-winddown": {
+    meals: [
+      {
+        title: "Dinner: comforting soup",
+        time: "18:00",
+        notes: "Soft textures, warm broth",
+      },
+    ],
+    reminders: [
+      {
+        title: "Calm music",
+        time: "19:00",
+        tone: "gentle",
+      },
+    ],
+  },
+};
+
+let state = loadState();
+let alertTimers = [];
+let caregiverUnlocked = false;
+let notesSaveTimer = null;
+let pendingDelete = null;
+let pendingDeleteTimer = null;
+let escalationTimer = null;
+const textEncoder = new TextEncoder();
+const textDecoder = new TextDecoder();
+
+const mealForm = document.getElementById("mealForm");
+const exerciseForm = document.getElementById("exerciseForm");
+const reminderForm = document.getElementById("reminderForm");
+const medForm = document.getElementById("medForm");
+const mealList = document.getElementById("mealList");
+const exerciseList = document.getElementById("exerciseList");
+const reminderList = document.getElementById("reminderList");
+const medList = document.getElementById("medList");
+const summary = document.getElementById("summary");
+const careNotes = document.getElementById("careNotes");
+const saveNotes = document.getElementById("saveNotes");
+const saveStatus = document.getElementById("saveStatus");
+const printPlan = document.getElementById("printPlan");
+const resetPlan = document.getElementById("resetPlan");
+const openEmergency = document.getElementById("openEmergency");
+const modeChip = document.getElementById("modeChip");
+const modeDetail = document.getElementById("modeDetail");
+const toggleLargeText = document.getElementById("toggleLargeText");
+const toggleButtons = document.querySelectorAll(".toggle-btn");
+const viewTabs = document.querySelectorAll(".tab");
+const views = document.querySelectorAll(".view");
+const timelineNow = document.getElementById("timelineNow");
+const timelineNowMeta = document.getElementById("timelineNowMeta");
+const timelineNext = document.getElementById("timelineNext");
+const timelineNextMeta = document.getElementById("timelineNextMeta");
+const timelineLater = document.getElementById("timelineLater");
+const timelineLaterMeta = document.getElementById("timelineLaterMeta");
+const weekView = document.getElementById("weekView");
+const densityButtons = document.querySelectorAll(".density-btn");
+const routineGrid = document.getElementById("routineGrid");
+const incidentForm = document.getElementById("incidentForm");
+const incidentList = document.getElementById("incidentList");
+const trendMetrics = document.getElementById("trendMetrics");
+const completionBars = document.getElementById("completionBars");
+const incidentBars = document.getElementById("incidentBars");
+const teamList = document.getElementById("teamList");
+const switchUserForm = document.getElementById("switchUserForm");
+const switchUserSelect = document.getElementById("switchUserSelect");
+const createUserForm = document.getElementById("createUserForm");
+const activeUserSummary = document.getElementById("activeUserSummary");
+const escalationForm = document.getElementById("escalationForm");
+const escOne = document.getElementById("escOne");
+const escTwo = document.getElementById("escTwo");
+const escThree = document.getElementById("escThree");
+const exportCalendar = document.getElementById("exportCalendar");
+const shareSms = document.getElementById("shareSms");
+const shareEmail = document.getElementById("shareEmail");
+const syncNow = document.getElementById("syncNow");
+const syncStatus = document.getElementById("syncStatus");
+const backupExportForm = document.getElementById("backupExportForm");
+const backupPassphrase = document.getElementById("backupPassphrase");
+const backupImportForm = document.getElementById("backupImportForm");
+const backupFile = document.getElementById("backupFile");
+const restorePassphrase = document.getElementById("restorePassphrase");
+const auditList = document.getElementById("auditList");
+const handoffText = document.getElementById("handoffText");
+const copyHandoff = document.getElementById("copyHandoff");
+const printHandoff = document.getElementById("printHandoff");
+const enableAlerts = document.getElementById("enableAlerts");
+const alertStatus = document.getElementById("alertStatus");
+const caregiverGate = document.getElementById("caregiverGate");
+const gateExit = document.getElementById("gateExit");
+const unlockForm = document.getElementById("unlockForm");
+const unlockPassword = document.getElementById("unlockPassword");
+const unlockStatus = document.getElementById("unlockStatus");
+const passwordForm = document.getElementById("passwordForm");
+const currentPassword = document.getElementById("currentPassword");
+const newPassword = document.getElementById("newPassword");
+const confirmPassword = document.getElementById("confirmPassword");
+const passwordStatus = document.getElementById("passwordStatus");
+const toastStack = document.getElementById("toastStack");
+const quickAddAction = document.getElementById("quickAddAction");
+const quickSaveAction = document.getElementById("quickSaveAction");
+const quickHandoffAction = document.getElementById("quickHandoffAction");
+const emergencyScreen = document.getElementById("emergencyScreen");
+const closeEmergency = document.getElementById("closeEmergency");
+const emergencyContactView = document.getElementById("emergencyContactView");
+const diagnosisView = document.getElementById("diagnosisView");
+const allergyView = document.getElementById("allergyView");
+const clinicianView = document.getElementById("clinicianView");
+const addressView = document.getElementById("addressView");
+const emergencyMedsView = document.getElementById("emergencyMedsView");
+
+const safetyFields = {
+  prefFoods: document.getElementById("prefFoods"),
+  avoidFoods: document.getElementById("avoidFoods"),
+  mobilityNotes: document.getElementById("mobilityNotes"),
+  emergencyContact: document.getElementById("emergencyContact"),
+  diagnosisNotes: document.getElementById("diagnosisNotes"),
+  allergyNotes: document.getElementById("allergyNotes"),
+  clinicianContact: document.getElementById("clinicianContact"),
+  homeAddress: document.getElementById("homeAddress"),
+};
+
+function loadState() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return createDefaultData();
+  try {
+    const parsed = JSON.parse(raw);
+    return normalizeState({ ...createDefaultData(), ...parsed });
+  } catch (error) {
+    return createDefaultData();
+  }
+}
+
+function normalizeState(current) {
+  const today = getTodayIndex();
+  const withDefaults = (items) =>
+    (Array.isArray(items) ? items : []).map((item) => ({
+      ...item,
+      day: item.day ?? today,
+      done: Boolean(item.done),
+      repeat: item.repeat || "once",
+      critical: item.critical === "yes" ? "yes" : "no",
+    }));
+
+  current.meals = withDefaults(current.meals);
+  current.exercises = withDefaults(current.exercises);
+  current.reminders = withDefaults(current.reminders);
+  current.meds = withDefaults(current.meds);
+  current.safety = {
+    prefFoods: "",
+    avoidFoods: "",
+    mobilityNotes: "",
+    emergencyContact: "",
+    diagnosisNotes: "",
+    allergyNotes: "",
+    clinicianContact: "",
+    homeAddress: "",
+    ...(current.safety || {}),
+  };
+  current.incidents = Array.isArray(current.incidents)
+    ? current.incidents.map((incident) => ({
+        ...incident,
+        day: Number.isInteger(incident.day) ? incident.day : today,
+      }))
+    : [];
+  current.auditLog = Array.isArray(current.auditLog) ? current.auditLog : [];
+  current.accounts = Array.isArray(current.accounts) && current.accounts.length
+    ? current.accounts.map((account) => ({
+        id: account.id || crypto.randomUUID(),
+        name: account.name || "Unnamed",
+        role: ["owner", "caregiver", "viewer"].includes(account.role) ? account.role : "viewer",
+        pin: typeof account.pin === "string" ? account.pin : "",
+      }))
+    : createDefaultData().accounts;
+  current.activeUserId = current.accounts.some((account) => account.id === current.activeUserId)
+    ? current.activeUserId
+    : current.accounts[0].id;
+  current.notes = typeof current.notes === "string" ? current.notes : "";
+  current.mode = current.mode === "caregiver" ? "caregiver" : "patient";
+  current.view = typeof current.view === "string" ? current.view : "today";
+  current.weekDensity = current.weekDensity === "compact" ? "compact" : "comfort";
+  current.largeText = Boolean(current.largeText);
+  current.escalationMinutes = {
+    one: Math.max(1, Number(current.escalationMinutes?.one) || 15),
+    two: Math.max(2, Number(current.escalationMinutes?.two) || 30),
+    three: Math.max(3, Number(current.escalationMinutes?.three) || 60),
+  };
+  current.escalationHistory = current.escalationHistory || {};
+  current.lastSyncedAt = typeof current.lastSyncedAt === "string" ? current.lastSyncedAt : "";
+  current.alertsEnabled = Boolean(current.alertsEnabled);
+  return current;
+}
+
+function saveState() {
+  state.lastSyncedAt = new Date().toISOString();
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  updateSyncStatus();
+}
+
+function getActiveUser() {
+  return state.accounts.find((account) => account.id === state.activeUserId) || state.accounts[0];
+}
+
+function getActiveRole() {
+  return getActiveUser()?.role || "viewer";
+}
+
+function canEditPlans() {
+  return ["owner", "caregiver"].includes(getActiveRole());
+}
+
+function canManageTeam() {
+  return getActiveRole() === "owner";
+}
+
+function requirePermission(checkFn, message) {
+  if (checkFn()) return true;
+  showToast(message, { type: "warn", duration: 3200 });
+  return false;
+}
+
+function addAudit(action, details = "") {
+  const activeUser = getActiveUser();
+  const entry = {
+    id: crypto.randomUUID(),
+    at: new Date().toISOString(),
+    user: activeUser ? `${activeUser.name} (${activeUser.role})` : "Unknown",
+    action,
+    details,
+  };
+  state.auditLog.unshift(entry);
+  state.auditLog = state.auditLog.slice(0, AUDIT_MAX);
+}
+
+function updateSyncStatus() {
+  const syncLabel = state.lastSyncedAt
+    ? `Last synced: ${new Date(state.lastSyncedAt).toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit",
+      })}`
+    : "Sync idle.";
+  if (syncStatus) syncStatus.textContent = syncLabel;
+}
+
+function switchUserSession(userId, pin) {
+  const user = state.accounts.find((account) => account.id === userId);
+  if (!user) return { ok: false, message: "User not found." };
+  if (user.pin && user.pin !== pin) return { ok: false, message: "PIN is incorrect." };
+  state.activeUserId = user.id;
+  caregiverUnlocked = user.role !== "viewer";
+  if (user.role === "viewer") {
+    state.mode = "patient";
+    state.view = "today";
+  }
+  addAudit("Switched user", `${user.name} (${user.role})`);
+  saveState();
+  return { ok: true, user };
+}
+
+function createTeamUser(name, role, pin) {
+  state.accounts.push({
+    id: crypto.randomUUID(),
+    name,
+    role,
+    pin,
+  });
+  addAudit("Created team member", `${name} (${role})`);
+  saveState();
+}
+
+function formatICSDateTime(date) {
+  const pad = (value) => String(value).padStart(2, "0");
+  const year = date.getFullYear();
+  const month = pad(date.getMonth() + 1);
+  const day = pad(date.getDate());
+  const hours = pad(date.getHours());
+  const minutes = pad(date.getMinutes());
+  return `${year}${month}${day}T${hours}${minutes}00`;
+}
+
+function buildICSText() {
+  const lines = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Harbor Plan//EN", "CALSCALE:GREGORIAN"];
+  getAllPlanItems().forEach((item) => {
+    const start = makeEventTimestamp(item.day, item.time || "08:00");
+    const end = new Date(start.getTime() + 30 * 60000);
+    lines.push("BEGIN:VEVENT");
+    lines.push(`UID:${item.id}@harbor-plan`);
+    lines.push(`DTSTAMP:${formatICSDateTime(new Date())}`);
+    lines.push(`DTSTART:${formatICSDateTime(start)}`);
+    lines.push(`DTEND:${formatICSDateTime(end)}`);
+    lines.push(`SUMMARY:${item.title}`);
+    lines.push(`DESCRIPTION:${item.notes || item.tone || ""}`);
+    lines.push("END:VEVENT");
+  });
+  lines.push("END:VCALENDAR");
+  return lines.join("\r\n");
+}
+
+function downloadTextFile(filename, content, mime = "text/plain;charset=utf-8") {
+  const blob = new Blob([content], { type: mime });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
+function getShareMessage() {
+  return buildHandoff();
+}
+
+function openSmsShare() {
+  const body = encodeURIComponent(getShareMessage());
+  window.open(`sms:?&body=${body}`, "_self");
+}
+
+function openEmailShare() {
+  const subject = encodeURIComponent("Harbor Plan Handoff");
+  const body = encodeURIComponent(getShareMessage());
+  window.open(`mailto:?subject=${subject}&body=${body}`, "_self");
+}
+
+function encodeBase64(bytes) {
+  let text = "";
+  bytes.forEach((byte) => {
+    text += String.fromCharCode(byte);
+  });
+  return btoa(text);
+}
+
+function decodeBase64(base64) {
+  const text = atob(base64);
+  const bytes = new Uint8Array(text.length);
+  for (let i = 0; i < text.length; i += 1) bytes[i] = text.charCodeAt(i);
+  return bytes;
+}
+
+async function deriveKey(passphrase, salt) {
+  const baseKey = await crypto.subtle.importKey(
+    "raw",
+    textEncoder.encode(passphrase),
+    { name: "PBKDF2" },
+    false,
+    ["deriveKey"],
+  );
+  return crypto.subtle.deriveKey(
+    {
+      name: "PBKDF2",
+      salt,
+      iterations: 200000,
+      hash: "SHA-256",
+    },
+    baseKey,
+    { name: "AES-GCM", length: 256 },
+    false,
+    ["encrypt", "decrypt"],
+  );
+}
+
+async function exportEncryptedBackup(passphrase) {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await deriveKey(passphrase, salt);
+  const payload = JSON.stringify(state);
+  const cipher = await crypto.subtle.encrypt(
+    { name: "AES-GCM", iv },
+    key,
+    textEncoder.encode(payload),
+  );
+  const packet = {
+    version: 1,
+    salt: encodeBase64(salt),
+    iv: encodeBase64(iv),
+    data: encodeBase64(new Uint8Array(cipher)),
+  };
+  downloadTextFile(
+    `harbor-backup-${new Date().toISOString().slice(0, 10)}.json`,
+    JSON.stringify(packet, null, 2),
+    "application/json",
+  );
+}
+
+async function importEncryptedBackup(file, passphrase) {
+  const text = await file.text();
+  const packet = JSON.parse(text);
+  const salt = decodeBase64(packet.salt);
+  const iv = decodeBase64(packet.iv);
+  const data = decodeBase64(packet.data);
+  const key = await deriveKey(passphrase, salt);
+  const decrypted = await crypto.subtle.decrypt(
+    { name: "AES-GCM", iv },
+    key,
+    data,
+  );
+  const parsed = JSON.parse(textDecoder.decode(new Uint8Array(decrypted)));
+  state = normalizeState({ ...createDefaultData(), ...parsed });
+  addAudit("Restored encrypted backup");
+  saveState();
+  renderAll();
+}
+
+function showToast(message, { type = "info", duration = 2500, actions = [] } = {}) {
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+
+  const text = document.createElement("div");
+  text.className = "toast-message";
+  text.textContent = message;
+  toast.appendChild(text);
+
+  if (actions.length) {
+    const actionRow = document.createElement("div");
+    actionRow.className = "toast-actions";
+    actions.forEach((action) => {
+      const actionButton = document.createElement("button");
+      actionButton.type = "button";
+      actionButton.className = "toast-btn";
+      actionButton.textContent = action.label;
+      actionButton.addEventListener("click", () => {
+        action.onClick?.();
+        toast.remove();
+      });
+      actionRow.appendChild(actionButton);
+    });
+    toast.appendChild(actionRow);
+  }
+
+  toastStack.appendChild(toast);
+  if (duration > 0) {
+    setTimeout(() => {
+      toast.remove();
+    }, duration);
+  }
+}
+
+function setLargeText(enabled, persist = true) {
+  state.largeText = Boolean(enabled);
+  document.body.classList.toggle("large-text", state.largeText);
+  toggleLargeText.textContent = state.largeText ? "Large text: On" : "Large text: Off";
+  if (persist) saveState();
+}
+
+function setWeekDensity(density, persist = true) {
+  state.weekDensity = density === "compact" ? "compact" : "comfort";
+  weekView.classList.toggle("compact", state.weekDensity === "compact");
+  densityButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.density === state.weekDensity);
+  });
+  if (persist) saveState();
+}
+
+function updateModeBadge() {
+  const caregiverActive = state.mode === "caregiver";
+  const activeUser = getActiveUser();
+  modeChip.textContent = caregiverActive ? "Caregiver View" : "Simple View";
+  modeChip.classList.toggle("caregiver", caregiverActive);
+  modeChip.classList.toggle("simple", !caregiverActive);
+
+  if (caregiverActive) {
+    modeDetail.textContent = caregiverUnlocked
+      ? "Full planning controls are active."
+      : "Caregiver view is locked.";
+  } else {
+    modeDetail.textContent = "Quick, low-clutter view for calm routines.";
+  }
+  if (activeUser) {
+    activeUserSummary.textContent = `${activeUser.name} · ${activeUser.role}`;
+  }
+}
+
+function eventToMinutes(timeValue) {
+  if (!timeValue) return Number.POSITIVE_INFINITY;
+  const [hours, minutes] = timeValue.split(":").map(Number);
+  return hours * 60 + minutes;
+}
+
+function getRepeatDays(repeat, baseDay) {
+  if (repeat === "daily") return [0, 1, 2, 3, 4, 5, 6];
+  if (repeat === "weekdays") return [1, 2, 3, 4, 5];
+  return [Number(baseDay)];
+}
+
+function getCaregiverPassword() {
+  return localStorage.getItem(CAREGIVER_PASS_KEY) || "";
+}
+
+function setCaregiverPassword(nextPassword) {
+  if (!nextPassword) {
+    localStorage.removeItem(CAREGIVER_PASS_KEY);
+    return;
+  }
+  localStorage.setItem(CAREGIVER_PASS_KEY, nextPassword);
+}
+
+function caregiverPasswordIsSet() {
+  return Boolean(getCaregiverPassword());
+}
+
+function sortByTime(items) {
+  return [...items].sort((a, b) => a.time.localeCompare(b.time));
+}
+
+function formatTime(timeString) {
+  if (!timeString) return "";
+  const [hour, minute] = timeString.split(":");
+  const date = new Date();
+  date.setHours(Number(hour));
+  date.setMinutes(Number(minute));
+  return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+}
+
+function buildItemDetails(item) {
+  const details = [];
+  if (item.dosage) details.push(item.dosage);
+  if (item.notes) details.push(item.notes);
+  if (item.tone) details.push(`${item.tone} tone`);
+  if (item.critical === "yes") details.push("critical");
+  if (item.repeat && item.repeat !== "once") details.push(item.repeat);
+  return details.join(" · ");
+}
+
+function buildTodayTimelineEvents() {
+  const todayIndex = getTodayIndex();
+  return [
+    ...state.meals.map((item) => ({ ...item, type: "Meal" })),
+    ...state.exercises.map((item) => ({ ...item, type: "Activity" })),
+    ...state.reminders.map((item) => ({ ...item, type: "Reminder" })),
+    ...state.meds.map((item) => ({ ...item, type: "Medication" })),
+  ]
+    .filter((item) => item.day === todayIndex && !item.done)
+    .sort((a, b) => a.time.localeCompare(b.time));
+}
+
+function renderTimelineCard(titleNode, metaNode, item, emptyTitle) {
+  if (!item) {
+    titleNode.textContent = emptyTitle;
+    metaNode.textContent = "";
+    return;
+  }
+  titleNode.textContent = `${formatTime(item.time)} - ${item.title}`;
+  metaNode.textContent = `${item.type} - ${DAYS[item.day]}`;
+}
+
+function renderTimeline() {
+  const events = buildTodayTimelineEvents();
+  if (!events.length) {
+    timelineNow.textContent = "All clear. Nothing pending today.";
+    timelineNowMeta.textContent = "";
+    timelineNext.textContent = "No upcoming items.";
+    timelineNextMeta.textContent = "";
+    timelineLater.textContent = "No later items.";
+    timelineLaterMeta.textContent = "";
+    return;
+  }
+
+  const now = new Date();
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  const nearestIndex = events.findIndex((event) => eventToMinutes(event.time) >= nowMinutes);
+  const nowIndex = nearestIndex === -1 ? events.length - 1 : nearestIndex;
+  const nowItem = events[nowIndex];
+  const nextItem = events[nowIndex + 1] || null;
+  const laterItem = events[nowIndex + 2] || null;
+
+  renderTimelineCard(timelineNow, timelineNowMeta, nowItem, "No immediate items.");
+  renderTimelineCard(timelineNext, timelineNextMeta, nextItem, "No upcoming items.");
+  renderTimelineCard(timelineLater, timelineLaterMeta, laterItem, "No later items.");
+}
+
+function updateQuickActions() {
+  const caregiverMode = state.mode === "caregiver";
+  quickAddAction.disabled = !caregiverMode;
+  quickSaveAction.disabled = !caregiverMode;
+}
+
+function updatePermissionUI() {
+  const editable = canEditPlans();
+  const owner = canManageTeam();
+  [mealForm, exerciseForm, reminderForm, medForm, incidentForm].forEach((form) => {
+    form.querySelectorAll("input, select, button").forEach((field) => {
+      field.disabled = !editable;
+    });
+  });
+  careNotes.readOnly = !editable;
+  saveNotes.disabled = !editable;
+  Object.values(safetyFields).forEach((field) => {
+    field.disabled = !editable;
+  });
+  createUserForm.querySelectorAll("input,select,button").forEach((field) => {
+    field.disabled = !owner;
+  });
+  escalationForm.querySelectorAll("input,button").forEach((field) => {
+    field.disabled = !owner;
+  });
+  backupExportForm.querySelectorAll("input,button").forEach((field) => {
+    field.disabled = !owner;
+  });
+  backupImportForm.querySelectorAll("input,button").forEach((field) => {
+    field.disabled = !owner;
+  });
+}
+
+function focusFirstPlannerField() {
+  const firstField = document.querySelector(
+    '.view[data-view="today"]:not(.view-hidden) .planner-form input, .view[data-view="today"]:not(.view-hidden) .planner-form select',
+  );
+  if (!firstField) return;
+  firstField.focus();
+  firstField.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function renderList(listElement, items, type, listKey) {
+  listElement.innerHTML = "";
+  if (!items.length) {
+    const empty = document.createElement("p");
+    empty.className = "status";
+    empty.textContent = `No ${type} planned yet.`;
+    listElement.appendChild(empty);
+    return;
+  }
+
+  sortByTime(items).forEach((item) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "list-item";
+    wrapper.classList.toggle("is-done", Boolean(item.done));
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const time = document.createElement("div");
+    time.className = "item-time";
+    time.textContent = formatTime(item.time);
+
+    const main = document.createElement("div");
+    main.className = "item-main";
+
+    const title = document.createElement("strong");
+    title.textContent = item.title;
+    main.appendChild(title);
+
+    const notes = document.createElement("small");
+    notes.textContent = buildItemDetails(item);
+    if (notes.textContent) main.appendChild(notes);
+
+    const day = document.createElement("small");
+    day.className = "item-day";
+    day.textContent = DAYS[item.day];
+    main.appendChild(day);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = item.done ? "Undo" : "Mark done";
+    button.disabled = !canEditPlans();
+    button.addEventListener("click", () => {
+      if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+      state[listKey] = state[listKey].map((entry) =>
+        entry.id === item.id ? { ...entry, done: !entry.done } : entry,
+      );
+      addAudit(item.done ? "Marked item not done" : "Marked item done", item.title);
+      saveState();
+      renderAll();
+      showToast(item.done ? "Marked as not done." : "Marked as done.", { type: "success" });
+    });
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.className = "remove-btn";
+    removeButton.textContent = "Delete";
+    removeButton.setAttribute("aria-label", `Remove ${item.title}`);
+    removeButton.disabled = !canEditPlans();
+    removeButton.addEventListener("click", () => {
+      if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+      queueDelete(listKey, item);
+    });
+
+    const actionGroup = document.createElement("div");
+    actionGroup.className = "action-buttons";
+    actionGroup.appendChild(button);
+    actionGroup.appendChild(removeButton);
+
+    meta.appendChild(time);
+    meta.appendChild(main);
+    meta.appendChild(actionGroup);
+    wrapper.appendChild(meta);
+
+    listElement.appendChild(wrapper);
+  });
+}
+
+function clearPendingDelete() {
+  if (pendingDeleteTimer) {
+    clearTimeout(pendingDeleteTimer);
+    pendingDeleteTimer = null;
+  }
+  pendingDelete = null;
+}
+
+function undoPendingDelete() {
+  if (!pendingDelete) return;
+  const { listKey, item } = pendingDelete;
+  clearPendingDelete();
+  state[listKey].push(item);
+  addAudit("Restored deleted item", item.title);
+  saveState();
+  renderAll();
+  showToast("Item restored.", { type: "success" });
+}
+
+function queueDelete(listKey, item) {
+  clearPendingDelete();
+  pendingDelete = { listKey, item };
+  state[listKey] = state[listKey].filter((entry) => entry.id !== item.id);
+  addAudit("Deleted item", item.title);
+  saveState();
+  renderAll();
+  showToast(`Removed: ${item.title}`, {
+    type: "warn",
+    duration: DELETE_UNDO_MS,
+    actions: [{ label: "Undo", onClick: undoPendingDelete }],
+  });
+  pendingDeleteTimer = setTimeout(() => {
+    clearPendingDelete();
+  }, DELETE_UNDO_MS);
+}
+
+function renderSummary() {
+  summary.innerHTML = "";
+  const totalMeals = state.meals.length;
+  const totalExercises = state.exercises.length;
+  const totalReminders = state.reminders.length;
+  const totalMeds = state.meds.length;
+
+  const data = [
+    { label: "Meals", value: totalMeals },
+    { label: "Activities", value: totalExercises },
+    { label: "Reminders", value: totalReminders },
+    { label: "Meds", value: totalMeds },
+  ];
+
+  data.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "summary-item";
+    row.innerHTML = `<span>${item.label}</span><span>${item.value}</span>`;
+    summary.appendChild(row);
+  });
+}
+
+function renderNotes() {
+  careNotes.value = state.notes;
+  Object.entries(safetyFields).forEach(([key, field]) => {
+    field.value = state.safety[key] || "";
+  });
+}
+
+function syncCareContextFromFields() {
+  state.notes = careNotes.value.trim();
+  Object.entries(safetyFields).forEach(([key, field]) => {
+    state.safety[key] = field.value.trim();
+  });
+}
+
+function saveCareContext(manual = false) {
+  syncCareContextFromFields();
+  if (manual) addAudit("Saved care notes");
+  saveState();
+  handoffText.value = buildHandoff();
+  saveStatus.textContent = manual
+    ? `Saved at ${new Date().toLocaleTimeString([], {
+        hour: "numeric",
+        minute: "2-digit",
+      })}`
+    : "Saved";
+  if (manual) showToast("Notes saved.", { type: "success" });
+}
+
+function scheduleCareContextAutosave() {
+  saveStatus.textContent = "Saving...";
+  clearTimeout(notesSaveTimer);
+  notesSaveTimer = setTimeout(() => {
+    saveCareContext(false);
+  }, NOTES_SAVE_DELAY_MS);
+}
+
+function renderWeek() {
+  weekView.innerHTML = "";
+  DAYS.forEach((day, index) => {
+    const items = [
+      ...state.meals.map((item) => ({ ...item, type: "Meal" })),
+      ...state.exercises.map((item) => ({ ...item, type: "Activity" })),
+      ...state.reminders.map((item) => ({ ...item, type: "Reminder" })),
+      ...state.meds.map((item) => ({ ...item, type: "Medication" })),
+    ].filter((item) => item.day === index);
+
+    const card = document.createElement("div");
+    card.className = "week-day";
+
+    const title = document.createElement("h3");
+    title.textContent = day;
+
+    const list = document.createElement("ul");
+    if (!items.length) {
+      const empty = document.createElement("li");
+      empty.textContent = "No plans yet.";
+      list.appendChild(empty);
+    } else {
+      sortByTime(items).forEach((item) => {
+        const li = document.createElement("li");
+        const doneLabel = item.done ? " (done)" : "";
+        li.textContent = `${formatTime(item.time)} · ${item.type}: ${item.title}${doneLabel}`;
+        list.appendChild(li);
+      });
+    }
+
+    card.appendChild(title);
+    card.appendChild(list);
+    weekView.appendChild(card);
+  });
+}
+
+function renderIncidents() {
+  incidentList.innerHTML = "";
+  if (!state.incidents.length) {
+    const empty = document.createElement("p");
+    empty.className = "status";
+    empty.textContent = "No incidents logged.";
+    incidentList.appendChild(empty);
+    return;
+  }
+  sortByTime(state.incidents).forEach((incident) => {
+    const card = document.createElement("article");
+    card.className = "incident-card";
+
+    const lineOne = document.createElement("strong");
+    lineOne.textContent = `${formatTime(incident.time)} · ${DAYS[incident.day]} · ${incident.type}`;
+    const lineTwo = document.createElement("small");
+    lineTwo.textContent = `Severity: ${incident.severity}`;
+    const lineThree = document.createElement("small");
+    lineThree.textContent = incident.notes || "";
+
+    card.appendChild(lineOne);
+    card.appendChild(lineTwo);
+    if (lineThree.textContent) card.appendChild(lineThree);
+
+    if (canEditPlans()) {
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.className = "ghost";
+      removeButton.textContent = "Delete";
+      removeButton.addEventListener("click", () => {
+        state.incidents = state.incidents.filter((entry) => entry.id !== incident.id);
+        addAudit("Deleted incident", incident.type);
+        saveState();
+        renderAll();
+      });
+      card.appendChild(removeButton);
+    }
+
+    incidentList.appendChild(card);
+  });
+}
+
+function getAllPlanItems() {
+  return [
+    ...state.meals.map((item) => ({ ...item, type: "meal" })),
+    ...state.exercises.map((item) => ({ ...item, type: "exercise" })),
+    ...state.reminders.map((item) => ({ ...item, type: "reminder" })),
+    ...state.meds.map((item) => ({ ...item, type: "medication" })),
+  ];
+}
+
+function completionRateForDay(dayIndex) {
+  const items = getAllPlanItems().filter((item) => item.day === dayIndex);
+  if (!items.length) return 0;
+  const doneCount = items.filter((item) => item.done).length;
+  return Math.round((doneCount / items.length) * 100);
+}
+
+function renderBarSeries(container, series, color = "var(--accent-2)") {
+  container.innerHTML = "";
+  series.forEach((item) => {
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    const label = document.createElement("small");
+    label.textContent = `${item.label}: ${item.value}${item.unit || ""}`;
+    const track = document.createElement("div");
+    track.className = "bar-track";
+    const fill = document.createElement("div");
+    fill.className = "bar-fill";
+    fill.style.width = `${Math.min(100, Math.max(0, item.percent))}%`;
+    fill.style.background = color;
+    track.appendChild(fill);
+    row.appendChild(label);
+    row.appendChild(track);
+    container.appendChild(row);
+  });
+}
+
+function renderTrends() {
+  const allItems = getAllPlanItems();
+  const completed = allItems.filter((item) => item.done).length;
+  const completion = allItems.length ? Math.round((completed / allItems.length) * 100) : 0;
+  const meds = state.meds.length;
+  const medsDone = state.meds.filter((item) => item.done).length;
+  const medRate = meds ? Math.round((medsDone / meds) * 100) : 0;
+  const thisWeekIncidents = state.incidents.length;
+  const overdueCritical = getOverdueCriticalEvents().length;
+
+  trendMetrics.innerHTML = "";
+  [
+    { label: "Total completion", value: `${completion}%` },
+    { label: "Medication adherence", value: `${medRate}%` },
+    { label: "Incidents this week", value: String(thisWeekIncidents) },
+    { label: "Overdue critical meds", value: String(overdueCritical) },
+  ].forEach((metric) => {
+    const card = document.createElement("article");
+    card.className = "metric-card";
+    const label = document.createElement("small");
+    label.textContent = metric.label;
+    const value = document.createElement("strong");
+    value.textContent = metric.value;
+    card.appendChild(label);
+    card.appendChild(value);
+    trendMetrics.appendChild(card);
+  });
+
+  renderBarSeries(
+    completionBars,
+    DAYS.map((day, index) => ({
+      label: day,
+      value: completionRateForDay(index),
+      unit: "%",
+      percent: completionRateForDay(index),
+    })),
+  );
+
+  const incidentCounts = DAYS.map((day, index) => {
+    const count = state.incidents.filter((incident) => incident.day === index).length;
+    return { label: day, value: count, percent: Math.min(100, count * 20) };
+  });
+  renderBarSeries(incidentBars, incidentCounts, "#9b3f37");
+}
+
+function renderTeam() {
+  const activeUser = getActiveUser();
+  const canManage = canManageTeam();
+
+  switchUserSelect.innerHTML = "";
+  state.accounts.forEach((account) => {
+    const option = document.createElement("option");
+    option.value = account.id;
+    option.textContent = `${account.name} (${account.role})`;
+    switchUserSelect.appendChild(option);
+  });
+  switchUserSelect.value = activeUser.id;
+
+  teamList.innerHTML = "";
+  state.accounts.forEach((account) => {
+    const row = document.createElement("article");
+    row.className = "team-item";
+
+    const identity = document.createElement("div");
+    identity.className = "identity";
+    const name = document.createElement("strong");
+    name.textContent = account.name;
+    const role = document.createElement("span");
+    role.className = `pill ${account.role}`;
+    role.textContent = account.role;
+    identity.appendChild(name);
+    identity.appendChild(role);
+
+    const right = document.createElement("div");
+    if (canManage && account.id !== activeUser.id) {
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "ghost";
+      remove.textContent = "Remove";
+      remove.addEventListener("click", () => {
+        state.accounts = state.accounts.filter((entry) => entry.id !== account.id);
+        addAudit("Removed team member", account.name);
+        saveState();
+        renderAll();
+      });
+      right.appendChild(remove);
+    }
+
+    row.appendChild(identity);
+    row.appendChild(right);
+    teamList.appendChild(row);
+  });
+
+  createUserForm.querySelectorAll("input,select,button").forEach((field) => {
+    field.disabled = !canManage;
+  });
+}
+
+function renderAudit() {
+  auditList.innerHTML = "";
+  if (!state.auditLog.length) {
+    const empty = document.createElement("p");
+    empty.className = "status";
+    empty.textContent = "No audit entries yet.";
+    auditList.appendChild(empty);
+    return;
+  }
+  state.auditLog.slice(0, 120).forEach((entry) => {
+    const card = document.createElement("article");
+    card.className = "audit-entry";
+    const line1 = document.createElement("strong");
+    line1.textContent = entry.action;
+    const line2 = document.createElement("small");
+    line2.textContent = `${new Date(entry.at).toLocaleString()} · ${entry.user}`;
+    card.appendChild(line1);
+    card.appendChild(line2);
+    if (entry.details) {
+      const line3 = document.createElement("small");
+      line3.textContent = entry.details;
+      card.appendChild(line3);
+    }
+    auditList.appendChild(card);
+  });
+}
+
+function renderEmergencyProfile() {
+  emergencyContactView.textContent = state.safety.emergencyContact || "Not set";
+  diagnosisView.textContent = state.safety.diagnosisNotes || "Not set";
+  allergyView.textContent = state.safety.allergyNotes || "Not set";
+  clinicianView.textContent = state.safety.clinicianContact || "Not set";
+  addressView.textContent = state.safety.homeAddress || "Not set";
+
+  const todayIndex = getTodayIndex();
+  const todayMeds = sortByTime(state.meds.filter((item) => item.day === todayIndex));
+  emergencyMedsView.innerHTML = "";
+  if (!todayMeds.length) {
+    emergencyMedsView.textContent = "No medications listed for today.";
+  } else {
+    const ul = document.createElement("ul");
+    ul.style.margin = "0";
+    ul.style.paddingLeft = "1rem";
+    todayMeds.forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = `${formatTime(item.time)} · ${item.title}${item.dosage ? ` (${item.dosage})` : ""}`;
+      ul.appendChild(li);
+    });
+    emergencyMedsView.appendChild(ul);
+  }
+}
+
+function openEmergencyMode() {
+  renderEmergencyProfile();
+  emergencyScreen.classList.remove("emergency-hidden");
+  emergencyScreen.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  addAudit("Opened emergency mode");
+  saveState();
+}
+
+function closeEmergencyMode() {
+  emergencyScreen.classList.add("emergency-hidden");
+  emergencyScreen.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+}
+
+function setMode(mode) {
+  const previousMode = state.mode;
+  state.mode = mode;
+  if (previousMode !== mode && mode === "patient") {
+    caregiverUnlocked = false;
+    closeCaregiverGate();
+  }
+  document.body.classList.toggle("simple-mode", mode === "patient");
+  toggleButtons.forEach((button) => {
+    button.classList.toggle("active", button.dataset.mode === mode);
+  });
+  if (mode === "patient") {
+    setView("today");
+  }
+  updateModeBadge();
+  updateQuickActions();
+  saveState();
+}
+
+function setView(view) {
+  const desired = state.mode === "patient" && view !== "today" ? "today" : view;
+  state.view = desired;
+  viewTabs.forEach((button) => {
+    button.classList.toggle("active", button.dataset.view === desired);
+  });
+  views.forEach((section) => {
+    const matches = section.dataset.view === desired;
+    section.classList.toggle("view-hidden", !matches);
+  });
+  saveState();
+}
+
+function handleSubmit(form, listKey) {
+  if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+  const formData = new FormData(form);
+  const base = Object.fromEntries(formData.entries());
+  const repeat = base.repeat || "once";
+  const days = getRepeatDays(repeat, base.day);
+  days.forEach((dayValue) => {
+    const entry = {
+      ...base,
+      id: crypto.randomUUID(),
+      day: Number(dayValue),
+      done: false,
+      repeat,
+      critical: base.critical === "yes" ? "yes" : "no",
+    };
+    state[listKey].push(entry);
+  });
+  addAudit("Added schedule item", `${listKey} · ${base.title || "Untitled"} · ${repeat}`);
+  saveState();
+  renderAll();
+  form.reset();
+  setDaySelectDefaults();
+  showToast("Item added.", { type: "success" });
+}
+
+function setDaySelectDefaults() {
+  const today = String(getTodayIndex());
+  document.querySelectorAll(".day-select").forEach((select) => {
+    select.value = today;
+  });
+  document.querySelectorAll(".routine-day").forEach((select) => {
+    select.value = today;
+  });
+}
+
+function buildHandoff() {
+  const todayIndex = getTodayIndex();
+  const todayLabel = DAYS[todayIndex];
+  const generatedAt = new Date().toLocaleString([], {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  });
+  const todayItems = {
+    meals: state.meals.filter((item) => item.day === todayIndex),
+    exercises: state.exercises.filter((item) => item.day === todayIndex),
+    reminders: state.reminders.filter((item) => item.day === todayIndex),
+    meds: state.meds.filter((item) => item.day === todayIndex),
+    incidents: state.incidents.filter((item) => item.day === todayIndex),
+  };
+
+  const lines = [];
+  lines.push("Harbor Plan - Care Handoff Report");
+  lines.push(`Generated: ${generatedAt}`);
+  lines.push(`Care day: ${todayLabel}`);
+  lines.push("");
+  lines.push("Shift Snapshot");
+  lines.push(`Meals: ${todayItems.meals.length}`);
+  lines.push(`Activities: ${todayItems.exercises.length}`);
+  lines.push(`Reminders: ${todayItems.reminders.length}`);
+  lines.push(`Medication entries: ${todayItems.meds.length}`);
+  lines.push(`Incidents: ${todayItems.incidents.length}`);
+  lines.push("");
+  lines.push("1) Meals");
+  lines.push(...formatHandoffList(todayItems.meals));
+  lines.push("");
+  lines.push("2) Activities");
+  lines.push(...formatHandoffList(todayItems.exercises));
+  lines.push("");
+  lines.push("3) Reminders");
+  lines.push(...formatHandoffList(todayItems.reminders));
+  lines.push("");
+  lines.push("4) Medication");
+  lines.push(...formatHandoffList(todayItems.meds));
+  lines.push("");
+  lines.push("5) Care notes");
+  lines.push(state.notes ? state.notes : "No notes yet.");
+  lines.push("");
+  lines.push("6) Incidents");
+  if (todayItems.incidents.length) {
+    sortByTime(todayItems.incidents).forEach((incident) => {
+      lines.push(`- ${formatTime(incident.time)} · ${incident.type} · ${incident.severity}${incident.notes ? ` · ${incident.notes}` : ""}`);
+    });
+  } else {
+    lines.push("- No incidents reported.");
+  }
+  lines.push("");
+  lines.push("7) Safety quick check");
+  lines.push(`Preferred foods: ${state.safety.prefFoods || ""}`);
+  lines.push(`Foods to avoid: ${state.safety.avoidFoods || ""}`);
+  lines.push(`Mobility notes: ${state.safety.mobilityNotes || ""}`);
+  lines.push(`Emergency contact: ${state.safety.emergencyContact || ""}`);
+  lines.push(`Diagnosis notes: ${state.safety.diagnosisNotes || ""}`);
+  lines.push(`Allergy notes: ${state.safety.allergyNotes || ""}`);
+  lines.push(`Clinician contact: ${state.safety.clinicianContact || ""}`);
+  lines.push(`Home address: ${state.safety.homeAddress || ""}`);
+
+  return lines.join("\n");
+}
+
+function formatHandoffList(items) {
+  if (!items.length) return ["- None scheduled."];
+  return sortByTime(items).map((item) => {
+    const details = [item.title];
+    if (item.dosage) details.push(item.dosage);
+    if (item.notes) details.push(item.notes);
+    if (item.tone) details.push(`${item.tone} tone`);
+    if (item.done) details.push("done");
+    return `- ${formatTime(item.time)}: ${details.join(" · ")}`;
+  });
+}
+
+function renderAll() {
+  renderList(mealList, state.meals, "meals", "meals");
+  renderList(exerciseList, state.exercises, "activities", "exercises");
+  renderList(reminderList, state.reminders, "reminders", "reminders");
+  renderList(medList, state.meds, "medications", "meds");
+  renderSummary();
+  renderNotes();
+  renderTimeline();
+  renderWeek();
+  renderIncidents();
+  renderTrends();
+  renderTeam();
+  renderAudit();
+  renderEmergencyProfile();
+  handoffText.value = buildHandoff();
+  if (caregiverPasswordIsSet() && !caregiverUnlocked && state.mode === "caregiver") {
+    state.mode = "patient";
+    state.view = "today";
+  }
+  setMode(state.mode);
+  setView(state.view || "today");
+  setWeekDensity(state.weekDensity, false);
+  setLargeText(state.largeText, false);
+  escOne.value = String(state.escalationMinutes.one);
+  escTwo.value = String(state.escalationMinutes.two);
+  escThree.value = String(state.escalationMinutes.three);
+  updateQuickActions();
+  updatePermissionUI();
+  updateAlertStatus();
+  syncGateStatus();
+  updateSyncStatus();
+  scheduleAlerts();
+  startEscalationMonitor();
+  setDaySelectDefaults();
+}
+
+function addRoutine(routineId, day) {
+  if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+  const routine = routines[routineId];
+  if (!routine) return;
+  const dayValue = Number(day);
+
+  routine.meals?.forEach((item) => {
+    state.meals.push({ ...item, day: dayValue, id: crypto.randomUUID(), done: false, repeat: "once" });
+  });
+  routine.exercises?.forEach((item) => {
+    state.exercises.push({ ...item, day: dayValue, id: crypto.randomUUID(), done: false, repeat: "once" });
+  });
+  routine.reminders?.forEach((item) => {
+    state.reminders.push({ ...item, day: dayValue, id: crypto.randomUUID(), done: false, repeat: "once" });
+  });
+  routine.meds?.forEach((item) => {
+    state.meds.push({
+      ...item,
+      day: dayValue,
+      id: crypto.randomUUID(),
+      done: false,
+      repeat: "once",
+      critical: "no",
+    });
+  });
+  addAudit("Added routine", `${routineId} -> ${DAYS[dayValue]}`);
+  saveState();
+  renderAll();
+  showToast(`Routine added to ${DAYS[dayValue]}.`, { type: "success" });
+}
+
+function requestAlerts() {
+  if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+  if (!("Notification" in window)) {
+    showToast("Notifications are not supported in this browser.", { type: "warn", duration: 3500 });
+    return;
+  }
+  Notification.requestPermission().then((permission) => {
+    if (permission !== "granted") {
+      state.alertsEnabled = false;
+      updateAlertStatus();
+      saveState();
+      showToast("Notifications permission not granted.", { type: "warn", duration: 3500 });
+      return;
+    }
+    state.alertsEnabled = true;
+    saveState();
+    updateAlertStatus();
+    scheduleAlerts();
+    showToast("Alerts enabled.", { type: "success" });
+  });
+}
+
+function updateAlertStatus() {
+  alertStatus.textContent = state.alertsEnabled ? "Alerts on" : "Alerts off";
+  enableAlerts.textContent = state.alertsEnabled ? "Refresh alerts" : "Enable alerts";
+}
+
+function makeEventTimestamp(day, time) {
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay());
+  startOfWeek.setHours(0, 0, 0, 0);
+  const target = new Date(startOfWeek);
+  target.setDate(startOfWeek.getDate() + Number(day));
+  const [hours, minutes] = (time || "00:00").split(":").map(Number);
+  target.setHours(hours, minutes, 0, 0);
+  return target;
+}
+
+function getOverdueCriticalEvents() {
+  const now = new Date();
+  return state.meds
+    .filter((item) => item.critical === "yes" && !item.done)
+    .map((item) => ({
+      ...item,
+      targetDate: makeEventTimestamp(item.day, item.time),
+    }))
+    .filter((item) => item.targetDate <= now);
+}
+
+function notifyEscalation(level, eventItem, overdueMins) {
+  const labels = {
+    1: "Escalation 1",
+    2: "Escalation 2",
+    3: "Escalation 3",
+  };
+  const msg = `${labels[level]}: ${eventItem.title} is overdue by ${overdueMins} minutes.`;
+  showToast(msg, { type: "warn", duration: 4500 });
+  addAudit(labels[level], `${eventItem.title} overdue ${overdueMins} min`);
+  if ("Notification" in window && Notification.permission === "granted") {
+    new Notification(labels[level], { body: msg });
+  }
+}
+
+function runEscalationChecks() {
+  const now = new Date();
+  const thresholds = state.escalationMinutes;
+  const criticalEvents = getOverdueCriticalEvents();
+
+  const activeKeys = new Set();
+  let historyChanged = false;
+  criticalEvents.forEach((eventItem) => {
+    const key = eventItem.id;
+    activeKeys.add(key);
+    const overdueMins = Math.max(0, Math.floor((now.getTime() - eventItem.targetDate.getTime()) / 60000));
+    let level = 0;
+    if (overdueMins >= thresholds.three) level = 3;
+    else if (overdueMins >= thresholds.two) level = 2;
+    else if (overdueMins >= thresholds.one) level = 1;
+
+    const previous = Number(state.escalationHistory[key] || 0);
+    if (level > previous) {
+      state.escalationHistory[key] = level;
+      notifyEscalation(level, eventItem, overdueMins);
+      historyChanged = true;
+    }
+  });
+
+  Object.keys(state.escalationHistory).forEach((key) => {
+    if (!activeKeys.has(key)) {
+      delete state.escalationHistory[key];
+      historyChanged = true;
+    }
+  });
+  if (historyChanged) saveState();
+}
+
+function startEscalationMonitor() {
+  if (escalationTimer) clearInterval(escalationTimer);
+  escalationTimer = setInterval(runEscalationChecks, ESCALATION_CHECK_MS);
+  runEscalationChecks();
+}
+
+function openCaregiverGate(message = "") {
+  caregiverGate.classList.remove("gate-hidden");
+  caregiverGate.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+  unlockStatus.textContent =
+    message ||
+    (caregiverPasswordIsSet()
+      ? "Enter the caregiver password to continue."
+      : "Set a caregiver password below, then enter caregiver view.");
+  passwordStatus.textContent = caregiverPasswordIsSet()
+    ? "Use this form to change the password."
+    : "No caregiver password set yet. Create one now.";
+  unlockPassword.value = "";
+  unlockPassword.focus();
+}
+
+function closeCaregiverGate() {
+  caregiverGate.classList.add("gate-hidden");
+  caregiverGate.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+  unlockPassword.value = "";
+}
+
+function syncGateStatus() {
+  const hasPassword = caregiverPasswordIsSet();
+  passwordStatus.textContent = hasPassword
+    ? "Use this form to change the password."
+    : "No caregiver password set yet. Create one now.";
+}
+
+function scheduleAlerts() {
+  alertTimers.forEach((timer) => clearTimeout(timer));
+  alertTimers = [];
+  if (!state.alertsEnabled) return;
+  if (!("Notification" in window) || Notification.permission !== "granted") {
+    state.alertsEnabled = false;
+    updateAlertStatus();
+    saveState();
+    return;
+  }
+
+  const todayIndex = getTodayIndex();
+  const now = new Date();
+
+  const events = [
+    ...state.meals.map((item) => ({ ...item, label: "Meal" })),
+    ...state.exercises.map((item) => ({ ...item, label: "Activity" })),
+    ...state.reminders.map((item) => ({ ...item, label: "Reminder" })),
+    ...state.meds.map((item) => ({ ...item, label: "Medication" })),
+  ].filter((item) => item.day === todayIndex && !item.done);
+
+  events.forEach((event) => {
+    const [hour, minute] = event.time.split(":").map(Number);
+    const target = new Date();
+    target.setHours(hour, minute, 0, 0);
+    const delay = target.getTime() - now.getTime();
+    if (delay <= 0) return;
+
+    const timer = setTimeout(() => {
+      new Notification(`${event.label}: ${event.title}`, {
+        body: event.notes || event.dosage || "",
+      });
+    }, delay);
+
+    alertTimers.push(timer);
+  });
+}
+
+mealForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  handleSubmit(mealForm, "meals");
+});
+
+exerciseForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  handleSubmit(exerciseForm, "exercises");
+});
+
+reminderForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  handleSubmit(reminderForm, "reminders");
+});
+
+medForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  handleSubmit(medForm, "meds");
+});
+
+incidentForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+  const formData = new FormData(incidentForm);
+  const incident = Object.fromEntries(formData.entries());
+  incident.id = crypto.randomUUID();
+  incident.day = Number(incident.day);
+  state.incidents.push(incident);
+  addAudit("Logged incident", `${incident.type} (${incident.severity})`);
+  saveState();
+  incidentForm.reset();
+  setDaySelectDefaults();
+  renderAll();
+  showToast("Incident logged.", { type: "success" });
+});
+
+saveNotes.addEventListener("click", () => {
+  if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+  clearTimeout(notesSaveTimer);
+  saveCareContext(true);
+});
+
+careNotes.addEventListener("input", () => {
+  syncCareContextFromFields();
+  handoffText.value = buildHandoff();
+  scheduleCareContextAutosave();
+});
+
+Object.values(safetyFields).forEach((field) => {
+  field.addEventListener("input", () => {
+    syncCareContextFromFields();
+    handoffText.value = buildHandoff();
+    scheduleCareContextAutosave();
+  });
+});
+
+printPlan.addEventListener("click", () => {
+  window.print();
+});
+
+openEmergency.addEventListener("click", () => {
+  openEmergencyMode();
+});
+
+closeEmergency.addEventListener("click", () => {
+  closeEmergencyMode();
+});
+
+resetPlan.addEventListener("click", () => {
+  if (!requirePermission(canEditPlans, "Current role is read-only.")) return;
+  if (!confirm("Start a new day? This clears today’s plan.")) return;
+  clearTimeout(notesSaveTimer);
+  clearPendingDelete();
+  Object.assign(state, createDefaultData());
+  saveState();
+  renderAll();
+  saveStatus.textContent = "Not saved";
+  showToast("Plan reset to default day.", { type: "info" });
+});
+
+unlockForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const attempt = unlockPassword.value.trim();
+  if (!caregiverPasswordIsSet()) {
+    caregiverUnlocked = true;
+    unlockPassword.value = "";
+    unlockStatus.textContent = "";
+    closeCaregiverGate();
+    addAudit("Unlocked caregiver mode");
+    setMode("caregiver");
+    showToast("Caregiver view unlocked. Set a password in Step 2 for protection.", {
+      type: "info",
+      duration: 4200,
+    });
+    return;
+  }
+  if (!attempt) {
+    unlockStatus.textContent = "Enter the caregiver password.";
+    showToast("Password is required.", { type: "warn" });
+    return;
+  }
+  if (attempt !== getCaregiverPassword()) {
+    unlockStatus.textContent = "Password does not match.";
+    showToast("Password does not match.", { type: "warn" });
+    return;
+  }
+  caregiverUnlocked = true;
+  unlockPassword.value = "";
+  unlockStatus.textContent = "";
+  closeCaregiverGate();
+  addAudit("Unlocked caregiver mode");
+  setMode("caregiver");
+  showToast("Caregiver view unlocked.", { type: "success" });
+});
+
+passwordForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!requirePermission(canManageTeam, "Only owners can change the caregiver password.")) return;
+  const current = currentPassword.value.trim();
+  const next = newPassword.value.trim();
+  const confirm = confirmPassword.value.trim();
+  const existing = getCaregiverPassword();
+  if (!next) {
+    passwordStatus.textContent = "New password cannot be empty.";
+    showToast("New password cannot be empty.", { type: "warn" });
+    return;
+  }
+  if (next !== confirm) {
+    passwordStatus.textContent = "New passwords do not match.";
+    showToast("New passwords do not match.", { type: "warn" });
+    return;
+  }
+  if (existing && current !== existing) {
+    passwordStatus.textContent = "Current password is incorrect.";
+    showToast("Current password is incorrect.", { type: "warn" });
+    return;
+  }
+  setCaregiverPassword(next);
+  caregiverUnlocked = state.mode === "caregiver";
+  passwordForm.reset();
+  passwordStatus.textContent = existing ? "Password updated." : "Password set.";
+  unlockStatus.textContent = "Password saved. Enter it above to open caregiver view.";
+  addAudit(existing ? "Updated caregiver password" : "Set caregiver password");
+  showToast(existing ? "Password updated." : "Password set.", { type: "success" });
+});
+
+gateExit.addEventListener("click", () => {
+  closeCaregiverGate();
+  caregiverUnlocked = false;
+  setMode("patient");
+  setView("today");
+  showToast("Returned to main menu.", { type: "info" });
+});
+
+caregiverGate.addEventListener("click", (event) => {
+  if (event.target !== caregiverGate) return;
+  gateExit.click();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key !== "Escape") return;
+  if (!emergencyScreen.classList.contains("emergency-hidden")) {
+    closeEmergencyMode();
+    return;
+  }
+  if (caregiverGate.classList.contains("gate-hidden")) return;
+  gateExit.click();
+});
+
+toggleButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const nextMode = button.dataset.mode;
+    if (nextMode === "caregiver" && state.mode !== "caregiver") {
+      openCaregiverGate();
+      return;
+    }
+    setMode(nextMode);
+    showToast(nextMode === "caregiver" ? "Caregiver mode active." : "Simple mode active.", {
+      type: "info",
+    });
+  });
+});
+
+toggleLargeText.addEventListener("click", () => {
+  setLargeText(!state.largeText);
+  showToast(state.largeText ? "Large text enabled." : "Large text disabled.", {
+    type: "info",
+  });
+});
+
+densityButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setWeekDensity(button.dataset.density);
+    showToast(
+      state.weekDensity === "compact" ? "Week view set to compact." : "Week view set to comfort.",
+      { type: "info" },
+    );
+  });
+});
+
+switchUserForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const formData = new FormData(switchUserForm);
+  const userId = String(formData.get("userId") || "");
+  const pin = String(formData.get("pin") || "");
+  const result = switchUserSession(userId, pin);
+  if (!result.ok) {
+    showToast(result.message, { type: "warn" });
+    return;
+  }
+  switchUserForm.reset();
+  renderAll();
+  showToast(`Signed in as ${result.user.name}.`, { type: "success" });
+});
+
+createUserForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!requirePermission(canManageTeam, "Only owners can add team members.")) return;
+  const formData = new FormData(createUserForm);
+  const name = String(formData.get("name") || "").trim();
+  const role = String(formData.get("role") || "viewer");
+  const pin = String(formData.get("pin") || "").trim();
+  if (!name || !pin) {
+    showToast("Name and PIN are required.", { type: "warn" });
+    return;
+  }
+  createTeamUser(name, role, pin);
+  createUserForm.reset();
+  renderAll();
+  showToast("Team member added.", { type: "success" });
+});
+
+escalationForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (!requirePermission(canManageTeam, "Only owners can change escalation thresholds.")) return;
+  const one = Math.max(1, Number(escOne.value || 15));
+  const two = Math.max(one + 1, Number(escTwo.value || 30));
+  const three = Math.max(two + 1, Number(escThree.value || 60));
+  state.escalationMinutes = { one, two, three };
+  addAudit("Updated escalation thresholds", `${one}/${two}/${three} minutes`);
+  saveState();
+  renderAll();
+  showToast("Escalation thresholds saved.", { type: "success" });
+});
+
+exportCalendar.addEventListener("click", () => {
+  const ics = buildICSText();
+  downloadTextFile("harbor-plan-calendar.ics", ics, "text/calendar;charset=utf-8");
+  addAudit("Exported calendar");
+  saveState();
+  showToast("Calendar exported.", { type: "success" });
+});
+
+shareSms.addEventListener("click", () => {
+  openSmsShare();
+  addAudit("Opened SMS share");
+  saveState();
+});
+
+shareEmail.addEventListener("click", () => {
+  openEmailShare();
+  addAudit("Opened email share");
+  saveState();
+});
+
+syncNow.addEventListener("click", () => {
+  addAudit("Manual sync");
+  saveState();
+  showToast("Sync completed.", { type: "success" });
+});
+
+backupExportForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!requirePermission(canManageTeam, "Only owners can export backups.")) return;
+  try {
+    await exportEncryptedBackup(backupPassphrase.value);
+    addAudit("Exported encrypted backup");
+    saveState();
+    backupExportForm.reset();
+    showToast("Encrypted backup downloaded.", { type: "success" });
+  } catch (error) {
+    showToast("Backup export failed.", { type: "warn" });
+  }
+});
+
+backupImportForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!requirePermission(canManageTeam, "Only owners can restore backups.")) return;
+  try {
+    const file = backupFile.files?.[0];
+    if (!file) {
+      showToast("Choose a backup file.", { type: "warn" });
+      return;
+    }
+    await importEncryptedBackup(file, restorePassphrase.value);
+    backupImportForm.reset();
+    showToast("Encrypted backup restored.", { type: "success" });
+  } catch (error) {
+    showToast("Backup restore failed. Check file/passphrase.", { type: "warn", duration: 4200 });
+  }
+});
+
+viewTabs.forEach((button) => {
+  button.addEventListener("click", () => {
+    setView(button.dataset.view);
+  });
+});
+
+routineGrid.addEventListener("click", (event) => {
+  const addButton = event.target.closest(".routine-add");
+  if (!addButton) return;
+  const card = addButton.closest(".routine-card");
+  const routineId = card.dataset.routine;
+  const daySelect = card.querySelector(".routine-day");
+  addRoutine(routineId, daySelect.value);
+});
+
+enableAlerts.addEventListener("click", () => {
+  if (state.alertsEnabled) {
+    scheduleAlerts();
+    alertStatus.textContent = "Alerts refreshed";
+    showToast("Alerts refreshed.", { type: "success" });
+    return;
+  }
+  requestAlerts();
+});
+
+copyHandoff.addEventListener("click", async () => {
+  try {
+    await navigator.clipboard.writeText(handoffText.value);
+    copyHandoff.textContent = "Copied!";
+    setTimeout(() => {
+      copyHandoff.textContent = "Copy summary";
+    }, 1500);
+    showToast("Handoff copied to clipboard.", { type: "success" });
+  } catch (error) {
+    showToast("Unable to copy automatically. Select and copy manually.", {
+      type: "warn",
+      duration: 3500,
+    });
+  }
+});
+
+printHandoff.addEventListener("click", () => {
+  setView("handoff");
+  window.print();
+});
+
+quickAddAction.addEventListener("click", () => {
+  if (state.mode !== "caregiver") {
+    openCaregiverGate("Unlock caregiver view to add items.");
+    return;
+  }
+  setView("today");
+  focusFirstPlannerField();
+  showToast("Jumped to first add form.", { type: "info" });
+});
+
+quickSaveAction.addEventListener("click", () => {
+  if (state.mode !== "caregiver") {
+    openCaregiverGate("Unlock caregiver view to save notes.");
+    return;
+  }
+  clearTimeout(notesSaveTimer);
+  saveCareContext(true);
+});
+
+quickHandoffAction.addEventListener("click", () => {
+  if (state.mode !== "caregiver") {
+    openCaregiverGate("Unlock caregiver view to open handoff.");
+    return;
+  }
+  setView("handoff");
+  handoffText.scrollIntoView({ behavior: "smooth", block: "start" });
+  showToast("Opened handoff.", { type: "info" });
+});
+
+window.addEventListener("storage", (event) => {
+  if (event.key !== STORAGE_KEY || !event.newValue) return;
+  try {
+    const parsed = JSON.parse(event.newValue);
+    state = normalizeState({ ...createDefaultData(), ...parsed });
+    renderAll();
+  } catch (error) {
+    // Ignore malformed external updates.
+  }
+});
+
+setDaySelectDefaults();
+renderAll();
+
+    </script>
+  </body>
+</html>
